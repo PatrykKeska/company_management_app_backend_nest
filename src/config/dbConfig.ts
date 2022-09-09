@@ -12,3 +12,5 @@ export default () =>
     logging: true,
     synchronize: true,
   } as TypeOrmModule);
+
+//dbConnectionConfig
