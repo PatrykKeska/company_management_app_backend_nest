@@ -1,4 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
+export enum ProductStatus {
+  OUTOFSTOCK,
+  AVAILABLE,
+}
 
 @Entity()
 export class Products extends BaseEntity {
@@ -21,7 +25,7 @@ export class Products extends BaseEntity {
   price: number;
 
   @Column({
-    length: 5,
+    precision: 5,
     type: 'int',
     nullable: false,
   })
@@ -39,4 +43,12 @@ export class Products extends BaseEntity {
     type: 'varchar',
   })
   img: string;
+
+  @Column({
+    type: 'enum',
+    enum: ProductStatus,
+    default: ProductStatus.OUTOFSTOCK,
+    nullable: false,
+  })
+  isAvailable: ProductStatus;
 }
