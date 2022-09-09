@@ -34,7 +34,11 @@ export class UserController {
   }
 
   @Post('/login')
-  async login(@Body() req: AuthLoginDto, @Res() res: Response): Promise<any> {
+  async login(
+    @Body() req: AuthLoginDto,
+    @Res() res: Response,
+    @UserObjectDecorator() user: User,
+  ): Promise<any> {
     return this.authService.login(req, res);
   }
 
