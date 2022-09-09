@@ -15,12 +15,6 @@ export class PlacesService {
         isSuccess: false,
         message: `there is no such a place!`,
       };
-    }
-    if (!isExist) {
-      return {
-        isSuccess: false,
-        message: `there is no such a place!`,
-      };
     } else {
       await Places.delete(id);
       return {
