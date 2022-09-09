@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  BaseEntity,
+  OneToMany,
+} from 'typeorm';
+import { ProductInPlaces } from './product_in_places.entity';
 export enum ProductStatus {
   OUTOFSTOCK,
   AVAILABLE,
@@ -51,4 +58,7 @@ export class Products extends BaseEntity {
     nullable: false,
   })
   isAvailable: ProductStatus;
+
+  @OneToMany(() => ProductInPlaces, (productInPlaces) => productInPlaces.places)
+  productInPlaces: ProductInPlaces;
 }

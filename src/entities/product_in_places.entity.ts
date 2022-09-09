@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  BaseEntity,
+  ManyToOne,
+} from 'typeorm';
+import { Products } from './products.entity';
+import { Places } from './places.entity';
 
 @Entity()
 export class ProductInPlaces extends BaseEntity {
@@ -6,23 +14,14 @@ export class ProductInPlaces extends BaseEntity {
   id: string;
 
   @Column({
-    length: 36,
-    type: 'varchar',
-    nullable: false,
-  })
-  productID: string;
-
-  @Column({
-    length: 36,
-    type: 'varchar',
-    nullable: false,
-  })
-  placeID: string;
-
-  @Column({
     type: 'tinyint',
     precision: 5,
     nullable: false,
   })
   amount: number;
+
+  @ManyToOne(() => Products, (product) => product.id)
+  products: Products;
+  @ManyToOne(() => Places, (places) => places.id)
+  places: Places;
 }
