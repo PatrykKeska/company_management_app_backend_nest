@@ -1,23 +1,34 @@
-import { Injectable } from '@nestjs/common';
-import { Places } from '../entities/places.entity';
+import { Inject, Injectable } from '@nestjs/common';
+import { Places, PlaceStatus } from '../entities/places.entity';
 import { NewPlaceDto } from './dto/new-place.dto';
 import { NewPlaceResponse } from './interfaces/new-place-response';
 import { UpdatePlaceResponse } from './interfaces/update-place-response';
 import { DeletePlaceResponse } from './interfaces/delete-place-response';
 import { UpdatePlaceDto } from './dto/update-place.dto';
+import { ProductInPlaces } from '../entities/product_in_places.entity';
+import { DataSource } from 'typeorm';
 
 @Injectable()
 export class PlacesService {
+  constructor(@Inject(DataSource) private dataSource: DataSource) {}
   async deletePlace(id): Promise<DeletePlaceResponse> {
     // @TODO Keep that in mind You can't remove a row since there is a relation table which gonna use this rows. Handle it by using enum to manage state and if there is no place in middle table just remove it !
-    const isExist = await Places.findOne({ where: { id } });
+    const data = await this.dataSource
+      .getRepository(ProductInPlaces)
+      .createQueryBuilder('placesInProducts')
+      .leftJoinAndSelect('placesInProducts.places', 'places')
+      .where('places.id = :id', { id })
+      .getOne();
+    const isExist = await Places.findOne({
+      where: { id },
+    });
     if (!isExist) {
       return {
         isSuccess: false,
         message: `there is no such a place!`,
       };
     } else {
-      await Places.delete(id);
+      // await Places.delete(id);
       return {
         isSuccess: true,
         message: `place ${id} has been removed`,
