@@ -9,6 +9,7 @@ import { UpdatePlaceDto } from './dto/update-place.dto';
 @Injectable()
 export class PlacesService {
   async deletePlace(id): Promise<DeletePlaceResponse> {
+    // @TODO Keep that in mind You can't remove a row since there is a relation table which gonna use this rows. Handle it by using enum to manage state and if there is no place in middle table just remove it !
     const isExist = await Places.findOne({ where: { id } });
     if (!isExist) {
       return {

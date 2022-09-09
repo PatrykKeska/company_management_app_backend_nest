@@ -7,6 +7,10 @@ import {
 } from 'typeorm';
 import { ProductInPlaces } from './product_in_places.entity';
 
+export enum PlaceStatus {
+  NOTAVAILABLE,
+  AVAILABLE,
+}
 @Entity()
 export class Places extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -47,6 +51,14 @@ export class Places extends BaseEntity {
     default: null,
   })
   img: string;
+
+  @Column({
+    type: 'enum',
+    enum: PlaceStatus,
+    default: PlaceStatus.NOTAVAILABLE,
+    nullable: false,
+  })
+  placeStatus: PlaceStatus;
 
   @OneToMany(() => ProductInPlaces, (productInPlaces) => productInPlaces.places)
   productInPlaces: ProductInPlaces;
