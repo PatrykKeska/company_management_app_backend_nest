@@ -12,11 +12,10 @@ import { DataSource } from 'typeorm';
 export class PlacesService {
   constructor(@Inject(DataSource) private dataSource: DataSource) {}
   async deletePlace(id): Promise<DeletePlaceResponse> {
-    // @TODO Keep that in mind You can't remove a row since there is a relation table which gonna use this rows. Handle it by using enum to manage state and if there is no place in middle table just remove it !
-    const data = await this.dataSource
+    const placeInAssign = await this.dataSource
       .getRepository(ProductInPlaces)
-      .createQueryBuilder('placesInProducts')
-      .leftJoinAndSelect('placesInProducts.places', 'places')
+      .createQueryBuilder('productInPlaces')
+      .leftJoinAndSelect('productInPlaces.places', 'places')
       .where('places.id = :id', { id })
       .getOne();
     const isExist = await Places.findOne({
@@ -28,11 +27,20 @@ export class PlacesService {
         message: `there is no such a place!`,
       };
     } else {
-      // await Places.delete(id);
-      return {
-        isSuccess: true,
-        message: `place ${id} has been removed`,
-      };
+      if (!placeInAssign) {
+        await Places.delete(id);
+        return {
+          isSuccess: true,
+          message: `place ${id} has been removed`,
+        };
+      } else {
+        isExist.placeStatus = PlaceStatus.NOTAVAILABLE;
+        await isExist.save();
+        return {
+          isSuccess: false,
+          message: `place ${id} is already assign!`,
+        };
+      }
     }
   }
 
