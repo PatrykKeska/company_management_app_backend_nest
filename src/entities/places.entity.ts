@@ -55,7 +55,7 @@ export class Places extends BaseEntity {
   @Column({
     type: 'enum',
     enum: PlaceStatus,
-    default: PlaceStatus.NOTAVAILABLE,
+    default: PlaceStatus.AVAILABLE,
     nullable: false,
   })
   placeStatus: PlaceStatus;
