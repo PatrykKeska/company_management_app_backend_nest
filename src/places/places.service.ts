@@ -11,6 +11,7 @@ import { DataSource } from 'typeorm';
 @Injectable()
 export class PlacesService {
   constructor(@Inject(DataSource) private dataSource: DataSource) {}
+
   async deletePlace(id): Promise<DeletePlaceResponse> {
     const placeInAssign = await this.dataSource
       .getRepository(ProductInPlaces)
@@ -45,7 +46,12 @@ export class PlacesService {
   }
 
   async getAllPlaces(): Promise<Places[]> {
-    return await Places.find();
+    // return await Places.findBy({ placeStatus: PlaceStatus.AVAILABLE });
+    return this.dataSource
+      .getRepository(Places)
+      .createQueryBuilder('places')
+      .where('places.placeStatus = :status', { status: '1' })
+      .getMany();
   }
 
   async getPlaceByID(id: string): Promise<Places> | null {
