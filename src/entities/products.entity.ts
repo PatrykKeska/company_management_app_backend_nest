@@ -54,10 +54,10 @@ export class Products extends BaseEntity {
   @Column({
     type: 'enum',
     enum: ProductStatus,
-    default: ProductStatus.OUTOFSTOCK,
+    default: ProductStatus.AVAILABLE,
     nullable: false,
   })
-  isAvailable: ProductStatus;
+  productStatus: ProductStatus;
 
   @OneToMany(() => ProductInPlaces, (productInPlaces) => productInPlaces.places)
   productInPlaces: ProductInPlaces;
