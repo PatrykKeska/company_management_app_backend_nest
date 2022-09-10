@@ -3,12 +3,14 @@ import {
   Column,
   PrimaryGeneratedColumn,
   BaseEntity,
-  ManyToMany,
-  JoinTable,
   OneToMany,
 } from 'typeorm';
 import { ProductInPlaces } from './product_in_places.entity';
 
+export enum PlaceStatus {
+  NOTAVAILABLE,
+  AVAILABLE,
+}
 @Entity()
 export class Places extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -45,9 +47,18 @@ export class Places extends BaseEntity {
   @Column({
     length: 200,
     type: 'varchar',
-    nullable: false,
+    nullable: true,
+    default: null,
   })
   img: string;
+
+  @Column({
+    type: 'enum',
+    enum: PlaceStatus,
+    default: PlaceStatus.AVAILABLE,
+    nullable: false,
+  })
+  placeStatus: PlaceStatus;
 
   @OneToMany(() => ProductInPlaces, (productInPlaces) => productInPlaces.places)
   productInPlaces: ProductInPlaces;
