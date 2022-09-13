@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { PlacesModule } from './places/places.module';
 import { ProductsModule } from './products/products.module';
+import { ProductInPlacesModule } from './product-in-places/product-in-places.module';
 import dbConfig from './config/dbConfig';
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import dbConfig from './config/dbConfig';
     UserModule,
     PlacesModule,
     ProductsModule,
+    ProductInPlacesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
