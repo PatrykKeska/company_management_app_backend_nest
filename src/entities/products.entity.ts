@@ -32,8 +32,8 @@ export class Products extends BaseEntity {
   price: number;
 
   @Column({
-    precision: 5,
     type: 'int',
+    precision: 6,
     nullable: false,
   })
   amount: number;
