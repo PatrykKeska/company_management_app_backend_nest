@@ -3,7 +3,6 @@ import { Products, ProductStatus } from '../entities/products.entity';
 import { DataSource } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 import { ProductCreatedResponse } from './interfaces/product-created-response';
-import { GetSingleProductResponse } from './interfaces/get-single-product-response';
 import { ProductUpdatedResponse } from './interfaces/product-updated-response';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductInPlaces } from '../entities/product_in_places.entity';
@@ -17,7 +16,7 @@ export class ProductsService {
     return await this.dataSource
       .getRepository(Products)
       .createQueryBuilder('products')
-      .where('products.productStatus = :status ', { status: '1 ' })
+      .where('products.productStatus = :status ', { status: '1' })
       .getMany();
   }
 
@@ -47,7 +46,7 @@ export class ProductsService {
     }
   }
 
-  async getProductByID(id: string): Promise<GetSingleProductResponse> | null {
+  async getProductByID(id: string): Promise<Products> | null {
     const product = Products.findOne({ where: { id } });
     if (product) {
       return product;
