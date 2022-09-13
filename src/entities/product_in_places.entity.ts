@@ -14,8 +14,8 @@ export class ProductInPlaces extends BaseEntity {
   id: string;
 
   @Column({
-    type: 'tinyint',
-    precision: 5,
+    type: 'int',
+    precision: 6,
     nullable: false,
   })
   amount: number;
