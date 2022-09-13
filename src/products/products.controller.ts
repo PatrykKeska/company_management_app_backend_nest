@@ -14,7 +14,6 @@ import { AuthGuard } from '@nestjs/passport';
 import { Products } from '../entities/products.entity';
 import { CreateProductDto } from './dto/create-product.dto';
 import { ProductCreatedResponse } from './interfaces/product-created-response';
-import { GetSingleProductResponse } from './interfaces/get-single-product-response';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductUpdatedResponse } from './interfaces/product-updated-response';
 import { RemoveProductResponse } from './interfaces/remove-product-response';
@@ -42,7 +41,7 @@ export class ProductsController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post('/get-one')
-  async getOneProductById(@Body() body): Promise<GetSingleProductResponse> {
+  async getOneProductById(@Body() body): Promise<Products> {
     const { id } = body;
     return this.productsService.getProductByID(id);
   }
