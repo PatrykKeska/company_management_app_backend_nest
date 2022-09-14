@@ -41,7 +41,7 @@ export class ProductInPlacesController {
   async updateAmountOfProduct(
     @Body() data: AddProductToPlaceDto,
   ): Promise<ProductAssignToPlaceResponse> {
-    return this.productInPlacesService.RemoveAmountOfProduct(data);
+    return this.productInPlacesService.subtractAmountOfProducts(data);
   }
 
   @UseGuards(AuthGuard('jwt'))

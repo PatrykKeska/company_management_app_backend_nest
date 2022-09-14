@@ -102,7 +102,7 @@ export class ProductInPlacesService {
     };
   }
 
-  async RemoveAmountOfProduct(
+  async subtractAmountOfProducts(
     data: AddProductToPlaceDto,
   ): Promise<ProductAssignToPlaceResponse> {
     const { productId, placeId, amount: amountToRemove } = data;
