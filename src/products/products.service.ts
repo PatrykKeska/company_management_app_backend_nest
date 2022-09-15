@@ -74,7 +74,7 @@ export class ProductsService {
       return product;
     } else return null;
   }
-
+  //@TODO CHeck if you not put a file still can upadte and everything is ok
   async updateProduct(
     product: UpdateProductDto,
     file: FileTransferInterface,
@@ -116,7 +116,7 @@ export class ProductsService {
       };
     }
   }
-
+  //@TODO CREATE A REMOVING OLD FILES !
   async removeProduct(id: string): Promise<RemoveProductResponse> {
     const isProductExist = await Products.findOne({ where: { id } });
     const isProductAssign = await this.dataSource
