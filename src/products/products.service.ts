@@ -68,13 +68,14 @@ export class ProductsService {
       throw e1;
     }
   }
+
   async getProductByID(id: string): Promise<Products> | null {
     const product = await Products.findOne({ where: { id } });
     if (product) {
       return product;
     } else return null;
   }
-  //@TODO CHeck if you not put a file still can upadte and everything is ok
+
   async updateProduct(
     product: UpdateProductDto,
     file: FileTransferInterface,
@@ -116,7 +117,7 @@ export class ProductsService {
       };
     }
   }
-  //@TODO CREATE A REMOVING OLD FILES !
+
   async removeProduct(id: string): Promise<RemoveProductResponse> {
     const isProductExist = await Products.findOne({ where: { id } });
     const isProductAssign = await this.dataSource
@@ -133,6 +134,11 @@ export class ProductsService {
     }
     if (!isProductAssign && isProductExist) {
       await Products.delete(id);
+      const pathTo = path.join(
+        storageDir(),
+        `/product-photos/${isProductExist.img}`,
+      );
+      fs.unlinkSync(pathTo);
       return {
         isSuccess: true,
         message: 'product has been removed',
