@@ -28,7 +28,7 @@ export class ProductsService {
       .where('products.productStatus = :status ', { status: '1' })
       .getMany();
   }
-
+  //@TODO Fix errors handle same as middle table !
   async createNewProduct(
     product: CreateProductDto,
     file: FileTransferInterface,
@@ -95,8 +95,9 @@ export class ProductsService {
             storageDir(),
             `/product-photos/${productToUpdate.img}`,
           );
-          console.log(pathTo);
-          fs.unlinkSync(pathTo);
+          if (productToUpdate.img) {
+            fs.unlinkSync(pathTo);
+          }
           productToUpdate.img = photo.filename;
         }
         await productToUpdate.save();
@@ -138,7 +139,9 @@ export class ProductsService {
         storageDir(),
         `/product-photos/${isProductExist.img}`,
       );
-      fs.unlinkSync(pathTo);
+      if (isProductExist.img) {
+        fs.unlinkSync(pathTo);
+      }
       return {
         isSuccess: true,
         message: 'product has been removed',
