@@ -48,6 +48,7 @@ export class Products extends BaseEntity {
   @Column({
     length: 200,
     type: 'varchar',
+    default: null,
   })
   img: string;
 

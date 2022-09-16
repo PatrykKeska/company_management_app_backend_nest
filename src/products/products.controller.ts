@@ -7,7 +7,9 @@ import {
   Inject,
   Patch,
   Post,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -17,6 +19,10 @@ import { ProductCreatedResponse } from './interfaces/product-created-response';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductUpdatedResponse } from './interfaces/product-updated-response';
 import { RemoveProductResponse } from './interfaces/remove-product-response';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { multerStorage, storageDir } from '../utils/storage';
+import { FileTransferInterface } from '../file-transfer/interfaces/multer-disk-uploaded-files';
+import * as path from 'path';
 
 @Controller('products')
 export class ProductsController {
@@ -32,11 +38,17 @@ export class ProductsController {
   }
 
   @UseGuards(AuthGuard('jwt'))
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: multerStorage(path.join(storageDir(), 'product-photos')),
+    }),
+  )
   @Post('/add-new')
   async createNewProduct(
     @Body() product: CreateProductDto,
+    @UploadedFile() file: FileTransferInterface,
   ): Promise<ProductCreatedResponse> {
-    return this.productsService.createNewProduct(product);
+    return this.productsService.createNewProduct(product, file);
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -47,11 +59,17 @@ export class ProductsController {
   }
 
   @UseGuards(AuthGuard('jwt'))
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: multerStorage(path.join(storageDir(), 'product-photos')),
+    }),
+  )
   @Patch('/update')
   async updateProductValues(
     @Body() product: UpdateProductDto,
+    @UploadedFile() file: FileTransferInterface,
   ): Promise<ProductUpdatedResponse> {
-    return this.productsService.updateProduct(product);
+    return this.productsService.updateProduct(product, file);
   }
 
   @UseGuards(AuthGuard('jwt'))

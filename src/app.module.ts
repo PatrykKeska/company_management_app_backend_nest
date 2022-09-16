@@ -8,7 +8,10 @@ import { UserModule } from './user/user.module';
 import { PlacesModule } from './places/places.module';
 import { ProductsModule } from './products/products.module';
 import { ProductInPlacesModule } from './product-in-places/product-in-places.module';
+import { FileTransferModule } from './file-transfer/file-transfer.module';
 import dbConfig from './config/dbConfig';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -18,6 +21,11 @@ import dbConfig from './config/dbConfig';
     PlacesModule,
     ProductsModule,
     ProductInPlacesModule,
+    FileTransferModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'storage/product-photos/'),
+      serveRoot: '/files',
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
