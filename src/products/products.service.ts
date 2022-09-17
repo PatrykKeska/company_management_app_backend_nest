@@ -8,10 +8,13 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductInPlaces } from '../entities/product_in_places.entity';
 import { RemoveProductResponse } from './interfaces/remove-product-response';
 import { FileTransferInterface } from '../file-transfer/interfaces/multer-disk-uploaded-files';
-import { FileTransferService } from '../file-transfer/file-transfer.service';
 import * as fs from 'fs';
 import * as path from 'path';
 import { storageDir } from '../utils/storage';
+import { FileTransferService } from '../file-transfer/file-transfer.service';
+import { PlaceProductNotExistException } from '../exceptions/place-product-not-exist.exception';
+import { NameValuesToShortException } from '../exceptions/name-values-to-short.exception';
+import { NeedAllValuesException } from '../exceptions/need-all-values.exception';
 
 @Injectable()
 export class ProductsService {
@@ -28,7 +31,7 @@ export class ProductsService {
       .where('products.productStatus = :status ', { status: '1' })
       .getMany();
   }
-  //@TODO Fix errors handle same as middle table !
+
   async createNewProduct(
     product: CreateProductDto,
     file: FileTransferInterface,
@@ -36,12 +39,9 @@ export class ProductsService {
     const { name, price, dateOfBuy, amount } = product;
     const photo = file;
     if (!name || !price || !dateOfBuy || !amount) {
-      return { isSuccess: false, message: 'All values are necessary!' };
+      throw new NeedAllValuesException();
     } else if (name.length < 3) {
-      return {
-        isSuccess: false,
-        message: `${name} length have to be greater than 2`,
-      };
+      throw new NameValuesToShortException();
     }
     try {
       const newProduct = new Products();
@@ -83,7 +83,6 @@ export class ProductsService {
     const { id, name, price, amount, dateOfBuy } = product;
     const photo = file;
     const productToUpdate = await Products.findOne({ where: { id } });
-
     if (productToUpdate) {
       if (name.length > 2) {
         productToUpdate.name = name;
@@ -106,10 +105,7 @@ export class ProductsService {
           message: `product ${name} updated!`,
         };
       } else {
-        return {
-          isSuccess: false,
-          message: 'name length have to be longer than 2 characters',
-        };
+        throw new NameValuesToShortException();
       }
     } else {
       return {
@@ -128,10 +124,7 @@ export class ProductsService {
       .where('products.id = :id', { id })
       .getOne();
     if (!isProductExist) {
-      return {
-        isSuccess: false,
-        message: 'there is no such a product',
-      };
+      throw new PlaceProductNotExistException();
     }
     if (!isProductAssign && isProductExist) {
       await Products.delete(id);
