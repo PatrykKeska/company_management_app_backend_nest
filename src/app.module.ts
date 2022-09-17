@@ -12,6 +12,7 @@ import { FileTransferModule } from './file-transfer/file-transfer.module';
 import dbConfig from './config/dbConfig';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),

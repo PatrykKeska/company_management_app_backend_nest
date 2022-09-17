@@ -13,6 +13,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { storageDir } from '../utils/storage';
 import { NameExistException } from '../exceptions/name-exist.exception';
+import { PlaceProductNotExistException } from '../exceptions/place-product-not-exist.exception';
+import { PlaceOrProductIsAssignException } from '../exceptions/place-or-product-is-assign.exception';
 @Injectable()
 export class PlacesService {
   constructor(
@@ -21,7 +23,6 @@ export class PlacesService {
     private fileTransferService: FileTransferService,
   ) {}
 
-  //@TODO Fix errors handle same as middle table !
   async deletePlace(id): Promise<DeletePlaceResponse> {
     const placeInAssign = await this.dataSource
       .getRepository(ProductInPlaces)
@@ -33,10 +34,7 @@ export class PlacesService {
       where: { id },
     });
     if (!isExist) {
-      return {
-        isSuccess: false,
-        message: `there is no such a place!`,
-      };
+      throw new PlaceProductNotExistException();
     } else {
       if (!placeInAssign) {
         const pathTo = path.join(
@@ -52,10 +50,7 @@ export class PlacesService {
       } else {
         isExist.placeStatus = PlaceStatus.NOTAVAILABLE;
         await isExist.save();
-        return {
-          isSuccess: false,
-          message: `place ${id} is already assign!`,
-        };
+        throw new PlaceOrProductIsAssignException();
       }
     }
   }
