@@ -7,7 +7,6 @@ export class FileTransferController {
     @Inject(FileTransferService)
     private fileTransferService: FileTransferService,
   ) {}
-
   @UseGuards(AuthGuard('jwt'))
   @Post('/photo')
   async getPhoto(@Body() body, @Res() res: any): Promise<any> {

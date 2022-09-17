@@ -15,7 +15,7 @@ export class FileTransferService {
         throw new Error('No photo found');
       }
       res.sendFile(one.img, {
-        root: path.join(storageDir(), 'product-photos/'),
+        root: path.join(storageDir(), '/product-photos/'),
       });
     } catch (error) {
       res.json({ error });
