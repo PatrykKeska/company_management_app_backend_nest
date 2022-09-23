@@ -50,7 +50,8 @@ Maybe you can mention me or this repo in the acknowledgements too
 <h5>Preview is working on Express.js at the moment</br></h5>
 <br/>* Preview available(Login and password : admin) : https://patrykkeska.networkmanager.pl
 <br/>* Frontend Repo : https://github.com/PatrykKeska/company_management_app_front
-<br/>* DataBase file for Import purpose  : https://github.com/PatrykKeska/company_management_app_backend/tree/main/DataBaseScheme
+<br/>* Since we are using a Typeform there is no need to use a file to build a database.
+Please make sure when you're going to create a new database to keep the name lowercase, another way Typeform might have some issues while rebuilding a structure.
 <h2>Please Check Frontend repo to find out more about it :)</h2></br>
 
 <!-- Screenshots -->
