@@ -23,6 +23,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { multerStorage, storageDir } from '../utils/storage';
 import { FileTransferInterface } from '../file-transfer/interfaces/multer-disk-uploaded-files';
 import * as path from 'path';
+import { RestoreProductDto } from './dto/restore-product.dto';
+import { SetProductUnavailableDto } from './dto/set-product-unavailable.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -70,6 +72,20 @@ export class ProductsController {
     @UploadedFile() file: FileTransferInterface,
   ): Promise<ProductUpdatedResponse> {
     return this.productsService.updateProduct(product, file);
+  }
+  @UseGuards(AuthGuard('jwt'))
+  @Patch('/restore')
+  async restoreProduct(
+    @Body() product: RestoreProductDto,
+  ): Promise<ProductUpdatedResponse> {
+    return this.productsService.restoreProduct(product);
+  }
+  @UseGuards(AuthGuard('jwt'))
+  @Patch('/unavailable')
+  async setUnAvailable(
+    @Body() product: SetProductUnavailableDto,
+  ): Promise<ProductUpdatedResponse> {
+    return this.productsService.setProductUnAvailable(product.productId);
   }
 
   @UseGuards(AuthGuard('jwt'))
