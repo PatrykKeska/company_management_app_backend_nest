@@ -15,6 +15,8 @@ import { storageDir } from '../utils/storage';
 import { NameExistException } from '../exceptions/name-exist.exception';
 import { PlaceProductNotExistException } from '../exceptions/place-product-not-exist.exception';
 import { PlaceOrProductIsAssignException } from '../exceptions/place-or-product-is-assign.exception';
+import { NeedAllValuesException } from '../exceptions/need-all-values.exception';
+
 @Injectable()
 export class PlacesService {
   constructor(
@@ -41,7 +43,9 @@ export class PlacesService {
           storageDir(),
           `/product-photos/${isExist.img}`,
         );
-        fs.unlinkSync(pathTo);
+        if (isExist.img && isExist.img !== 'default-office-image.jpeg') {
+          fs.unlinkSync(pathTo);
+        }
         await Places.delete(id);
         return {
           isSuccess: true,
@@ -56,11 +60,13 @@ export class PlacesService {
   }
 
   async getAllPlaces(): Promise<Places[]> {
-    return this.dataSource
-      .getRepository(Places)
-      .createQueryBuilder('places')
-      .where('places.placeStatus = :status', { status: '1' })
-      .getMany();
+    return (
+      this.dataSource
+        .getRepository(Places)
+        .createQueryBuilder('places')
+        // .where('places.placeStatus = :status', { status: '1' })
+        .getMany()
+    );
   }
 
   async getPlaceByID(id: string): Promise<Places> | null {
@@ -85,7 +91,10 @@ export class PlacesService {
           storageDir(),
           `/product-photos/${placeToUpdate.img}`,
         );
-        if (placeToUpdate.img) {
+        if (
+          placeToUpdate.img &&
+          placeToUpdate.img !== 'default-office-image.jpeg'
+        ) {
           fs.unlinkSync(pathTo);
         }
         placeToUpdate.img = photo.filename;
@@ -128,6 +137,8 @@ export class PlacesService {
         newPlace.buildNumber = buildNumber;
         if (photo) {
           newPlace.img = photo.filename;
+        } else {
+          newPlace.img = 'default-office-image.jpeg';
         }
         await newPlace.save();
         return { isSuccess: true, message: `New place ${name} created!` };
@@ -144,5 +155,41 @@ export class PlacesService {
       }
       throw e1;
     }
+  }
+
+  async restorePlace(placeId: string) {
+    if (!placeId) {
+      throw new NeedAllValuesException();
+    }
+    const placeToRestore = await Places.findOne({
+      where: { id: placeId },
+    });
+    if (!placeToRestore) {
+      throw new PlaceProductNotExistException();
+    }
+    placeToRestore.placeStatus = PlaceStatus.AVAILABLE;
+    await placeToRestore.save();
+    return {
+      isSuccess: true,
+      message: `Place is now Available!`,
+    };
+  }
+
+  async unAvailablePlace(placeId: string) {
+    if (!placeId) {
+      throw new NeedAllValuesException();
+    }
+    const placeToRestore = await Places.findOne({
+      where: { id: placeId },
+    });
+    if (!placeToRestore) {
+      throw new PlaceProductNotExistException();
+    }
+    placeToRestore.placeStatus = PlaceStatus.NOTAVAILABLE;
+    await placeToRestore.save();
+    return {
+      isSuccess: true,
+      message: `Place is now  Unavailable!`,
+    };
   }
 }
