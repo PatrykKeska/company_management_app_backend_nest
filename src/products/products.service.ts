@@ -15,6 +15,8 @@ import { FileTransferService } from '../file-transfer/file-transfer.service';
 import { PlaceProductNotExistException } from '../exceptions/place-product-not-exist.exception';
 import { NameValuesToShortException } from '../exceptions/name-values-to-short.exception';
 import { NeedAllValuesException } from '../exceptions/need-all-values.exception';
+import { RestoreProductDto } from './dto/restore-product.dto';
+import { ProductAmountToLow } from '../exceptions/product-amount-to.low';
 
 @Injectable()
 export class ProductsService {
@@ -28,7 +30,6 @@ export class ProductsService {
     return await this.dataSource
       .getRepository(Products)
       .createQueryBuilder('products')
-      .where('products.productStatus = :status ', { status: '1' })
       .getMany();
   }
 
@@ -38,7 +39,7 @@ export class ProductsService {
   ): Promise<ProductCreatedResponse> {
     const { name, price, dateOfBuy, amount } = product;
     const photo = file;
-    if (!name || !price || !dateOfBuy || !amount) {
+    if (!name || !price || !dateOfBuy || !amount || amount < 1 || price < 0.1) {
       throw new NeedAllValuesException();
     } else if (name.length < 3) {
       throw new NameValuesToShortException();
@@ -51,6 +52,8 @@ export class ProductsService {
       newProduct.dateOfBuy = dateOfBuy;
       if (photo) {
         newProduct.img = photo.filename;
+      } else {
+        newProduct.img = 'default-product-image.jpeg';
       }
       await newProduct.save();
       return {
@@ -94,7 +97,10 @@ export class ProductsService {
             storageDir(),
             `/product-photos/${productToUpdate.img}`,
           );
-          if (productToUpdate.img) {
+          if (
+            productToUpdate.img &&
+            productToUpdate.img !== 'default-product-image.jpeg'
+          ) {
             fs.unlinkSync(pathTo);
           }
           productToUpdate.img = photo.filename;
@@ -132,7 +138,10 @@ export class ProductsService {
         storageDir(),
         `/product-photos/${isProductExist.img}`,
       );
-      if (isProductExist.img) {
+      if (
+        isProductExist.img &&
+        isProductExist.img !== 'default-product-image.jpeg'
+      ) {
         fs.unlinkSync(pathTo);
       }
       return {
@@ -147,5 +156,49 @@ export class ProductsService {
         message: 'product is marked as Out of stock',
       };
     }
+  }
+
+  async restoreProduct(product: RestoreProductDto) {
+    const { productId, amount } = product;
+    if (!productId || !amount) {
+      throw new NeedAllValuesException();
+    }
+    if (amount < 1) {
+      throw new ProductAmountToLow();
+    }
+    const productToRestore = await Products.findOne({
+      where: { id: productId },
+    });
+    if (!productToRestore) {
+      throw new PlaceProductNotExistException();
+    }
+    productToRestore.productStatus = ProductStatus.AVAILABLE;
+    productToRestore.amount = amount;
+    await productToRestore.save();
+
+    return {
+      isSuccess: true,
+      message: `product updated!`,
+    };
+  }
+
+  async setProductUnAvailable(productId: string) {
+    if (!productId) {
+      throw new NeedAllValuesException();
+    }
+
+    const productToMakeUnavailable = await Products.findOne({
+      where: { id: productId },
+    });
+    if (!productToMakeUnavailable) {
+      throw new PlaceProductNotExistException();
+    }
+    productToMakeUnavailable.productStatus = ProductStatus.OUTOFSTOCK;
+    await productToMakeUnavailable.save();
+
+    return {
+      isSuccess: true,
+      message: `Product is now unavailable!`,
+    };
   }
 }
