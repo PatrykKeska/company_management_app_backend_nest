@@ -24,6 +24,7 @@ import { FileTransferInterface } from '../file-transfer/interfaces/multer-disk-u
 import { FileInterceptor } from '@nestjs/platform-express';
 import { multerStorage, storageDir } from '../utils/storage';
 import * as path from 'path';
+import { RestorePlaceDto } from '../products/dto/restore-place.dto';
 
 @Controller('places')
 export class PlacesController {
@@ -71,7 +72,17 @@ export class PlacesController {
   ): Promise<UpdatePlaceResponse> {
     return await this.places.updatePlaceValues(place, file);
   }
+  @UseGuards(AuthGuard('jwt'))
+  @Patch('/restore')
+  async restorePlaceToUse(@Body() place: RestorePlaceDto) {
+    return await this.places.restorePlace(place.placeId);
+  }
 
+  @UseGuards(AuthGuard('jwt'))
+  @Patch('/unavailable')
+  async setUnAvailablePlace(@Body() place: RestorePlaceDto) {
+    return await this.places.unAvailablePlace(place.placeId);
+  }
   @UseGuards(AuthGuard('jwt'))
   @Delete('/remove')
   async removePlace(@Body() place): Promise<DeletePlaceResponse> {
