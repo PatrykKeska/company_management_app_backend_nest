@@ -14,7 +14,6 @@ import * as path from 'path';
 import { storageDir } from '../utils/storage';
 import { NameExistException } from '../exceptions/name-exist.exception';
 import { PlaceProductNotExistException } from '../exceptions/place-product-not-exist.exception';
-import { PlaceOrProductIsAssignException } from '../exceptions/place-or-product-is-assign.exception';
 import { NeedAllValuesException } from '../exceptions/need-all-values.exception';
 
 @Injectable()
@@ -49,24 +48,24 @@ export class PlacesService {
         await Places.delete(id);
         return {
           isSuccess: true,
-          message: `place ${id} has been removed`,
+          message: `place has been removed`,
         };
       } else {
         isExist.placeStatus = PlaceStatus.NOTAVAILABLE;
         await isExist.save();
-        throw new PlaceOrProductIsAssignException();
+        return {
+          isSuccess: false,
+          message: `Since this place is used, you can't delete it straight away. Go to finalized tab and remove all connections with items then remove this place. For now, the place is marked as unavailable!`,
+        };
       }
     }
   }
 
   async getAllPlaces(): Promise<Places[]> {
-    return (
-      this.dataSource
-        .getRepository(Places)
-        .createQueryBuilder('places')
-        // .where('places.placeStatus = :status', { status: '1' })
-        .getMany()
-    );
+    return this.dataSource
+      .getRepository(Places)
+      .createQueryBuilder('places')
+      .getMany();
   }
 
   async getPlaceByID(id: string): Promise<Places> | null {
