@@ -153,7 +153,8 @@ export class ProductsService {
       await isProductExist.save();
       return {
         isSuccess: false,
-        message: 'product is marked as Out of stock',
+        message:
+          ' Since your product is already in use delete straight away is not possible! Go to finalized tab and remove this item from all places, then you can delete it from the database. For now, it is marked as out of stock',
       };
     }
   }
@@ -178,7 +179,7 @@ export class ProductsService {
 
     return {
       isSuccess: true,
-      message: `product updated!`,
+      message: `product restored!`,
     };
   }
 

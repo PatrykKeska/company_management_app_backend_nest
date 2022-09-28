@@ -73,6 +73,7 @@ export class ProductsController {
   ): Promise<ProductUpdatedResponse> {
     return this.productsService.updateProduct(product, file);
   }
+
   @UseGuards(AuthGuard('jwt'))
   @Patch('/restore')
   async restoreProduct(
