@@ -64,7 +64,7 @@ export class ProductInPlacesService {
       return {
         isSuccess: true,
         message:
-          'This product already exist in this place, so amount was updated!',
+          'This product already exists in this place. The amount of product was updated instead of added!',
       };
     }
 
