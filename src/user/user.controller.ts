@@ -46,7 +46,7 @@ export class UserController {
   @Get('/')
   async securityCheck() {
     return {
-      message: 'You did pass a security check',
+      message: 'OK',
     };
   }
   @Get('/logout')
