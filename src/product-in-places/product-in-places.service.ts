@@ -5,7 +5,7 @@ import { ProductInPlaces } from '../entities/product_in_places.entity';
 import { DataSource } from 'typeorm';
 import { PlacesService } from '../places/places.service';
 import { ProductsService } from '../products/products.service';
-import { ProductStatus } from '../entities/products.entity';
+import { Products, ProductStatus } from '../entities/products.entity';
 import { PlaceStatus } from '../entities/places.entity';
 import { NotAvailableException } from '../exceptions/not-available.exception';
 import { NeedAllValuesException } from '../exceptions/need-all-values.exception';
@@ -142,6 +142,46 @@ export class ProductInPlacesService {
       .where('places.id = :placeId', { placeId })
       .andWhere('products.id = :productId', { productId })
       .getOne();
+  }
+
+  async getExactFinalizedLocation(placeId: string) {
+    if (!placeId) {
+      throw new NeedAllValuesException();
+    }
+    const allProductsInPlace = {
+      place: {},
+      products: [],
+    };
+
+    const products = await this.dataSource
+      .getRepository(ProductInPlaces)
+      .createQueryBuilder('productInPlaces')
+      .leftJoinAndSelect('productInPlaces.places', 'places')
+      .innerJoinAndSelect('productInPlaces.products', 'products')
+      .where('places.id = :placeId', { placeId })
+      .getMany();
+    if (!products) {
+      throw new PlaceProductNotExistException();
+    }
+    products.map((res) => {
+      allProductsInPlace.place = { ...res.places };
+      const finalProduct = {
+        id: '',
+        name: '',
+        img: '',
+        price: 0,
+        dateOfBuy: '',
+        amount: 0,
+      } as Products;
+      finalProduct.id = res.products.id;
+      finalProduct.name = res.products.name;
+      finalProduct.img = res.products.img;
+      finalProduct.price = res.products.price;
+      finalProduct.dateOfBuy = res.products.dateOfBuy;
+      finalProduct.amount = res.amount;
+      allProductsInPlace.products.push(finalProduct);
+    });
+    return allProductsInPlace;
   }
 
   async validateIsObjectsExist(productId, placeId) {
