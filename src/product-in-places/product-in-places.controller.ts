@@ -28,11 +28,13 @@ export class ProductInPlacesController {
   ): Promise<ProductAssignToPlaceResponse> {
     return this.productInPlacesService.addProductToPlace(data);
   }
+
   @UseGuards(AuthGuard('jwt'))
   @Delete('/remove')
   async removeProduct(
     @Body() data: RemoveProductAssignDto,
   ): Promise<RemoveProductAssignResponse> {
+    console.log(data);
     return this.productInPlacesService.removeProductFromPlace(data);
   }
 
@@ -42,6 +44,13 @@ export class ProductInPlacesController {
     @Body() data: AddProductToPlaceDto,
   ): Promise<ProductAssignToPlaceResponse> {
     return this.productInPlacesService.subtractAmountOfProducts(data);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('/get-exact')
+  async getExactPlace(@Body() data: AddProductToPlaceDto) {
+    const { placeId } = data;
+    return this.productInPlacesService.getExactFinalizedLocation(placeId);
   }
 
   @UseGuards(AuthGuard('jwt'))
