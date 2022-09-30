@@ -56,6 +56,6 @@ export class ProductInPlacesController {
   @UseGuards(AuthGuard('jwt'))
   @Get('/get-all')
   async getAllProductsInPlaces() {
-    return await this.productInPlacesService.getAllAssignedLocationAndProducts();
+    return await this.productInPlacesService.getAllAssignedLocations();
   }
 }
