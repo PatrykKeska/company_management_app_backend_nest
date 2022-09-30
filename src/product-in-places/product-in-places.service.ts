@@ -6,7 +6,7 @@ import { DataSource } from 'typeorm';
 import { PlacesService } from '../places/places.service';
 import { ProductsService } from '../products/products.service';
 import { Products, ProductStatus } from '../entities/products.entity';
-import { PlaceStatus } from '../entities/places.entity';
+import { Places, PlaceStatus } from '../entities/places.entity';
 import { NotAvailableException } from '../exceptions/not-available.exception';
 import { NeedAllValuesException } from '../exceptions/need-all-values.exception';
 import { PlaceProductNotExistException } from '../exceptions/place-product-not-exist.exception';
@@ -24,9 +24,30 @@ export class ProductInPlacesService {
     private productService: ProductsService,
   ) {}
 
-  async getAllAssignedLocationAndProducts(): Promise<ProductInPlaces[]> {
-    return ProductInPlaces.find({ relations: ['places', 'products'] });
+  async getAllAssignedLocations(): Promise<Places[]> {
+    const allFinalPlaces = [];
+    const response = await ProductInPlaces.find({
+      relations: ['places'],
+    });
+    const data = response.filter(
+      (value, index, self) =>
+        index === self.findIndex((t) => t.places.id === value.places.id),
+    );
+    data.map((place) => {
+      const ourData = {
+        id: place.places.id,
+        name: place.places.name,
+        city: place.places.city,
+        img: place.places.img,
+        street: place.places.street,
+        buildNumber: place.places.buildNumber,
+      };
+      allFinalPlaces.push(ourData);
+    });
+
+    return allFinalPlaces;
   }
+
   async addProductToPlace(
     data: AddProductToPlaceDto,
   ): Promise<ProductAssignToPlaceResponse> {
@@ -124,9 +145,20 @@ export class ProductInPlacesService {
       .where('products.id = :productId', { productId })
       .andWhere('places.id = :placeId', { placeId })
       .execute();
+    const isOutOfStock = await this.getAssignedProductToPlace(
+      placeId,
+      productId,
+    );
+    if (isOutOfStock.amount === 0) {
+      await this.removeProductFromPlace({ placeId, productId });
+      return {
+        isSuccess: true,
+        message: `${amountToRemove} pieces amount of product was subtracted and deleted completely`,
+      };
+    }
     return {
       isSuccess: true,
-      message: 'ok!',
+      message: `${amountToRemove} pieces amount of product was subtracted`,
     };
   }
 
