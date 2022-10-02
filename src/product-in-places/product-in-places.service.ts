@@ -31,7 +31,8 @@ export class ProductInPlacesService {
     });
     const data = response.filter(
       (value, index, self) =>
-        index === self.findIndex((t) => t.places.id === value.places.id),
+        index ===
+        self.findIndex((record) => record.places.id === value.places.id),
     );
     data.map((place) => {
       const ourData = {
@@ -117,9 +118,19 @@ export class ProductInPlacesService {
       .andWhere('places.id = :placeId', { placeId })
       .execute();
 
+    const stock = await this.getExactFinalizedLocation(placeId);
+    if (stock.products.length < 1) {
+      return {
+        isSuccess: true,
+        message:
+          'Successfully product was removed. There are no more products in this place.',
+        redirect: true,
+      };
+    }
     return {
       isSuccess: true,
       message: 'Successfully product removed',
+      redirect: false,
     };
   }
 
@@ -151,15 +162,28 @@ export class ProductInPlacesService {
     );
     if (isOutOfStock.amount === 0) {
       await this.removeProductFromPlace({ placeId, productId });
+      const stock = await this.getExactFinalizedLocation(placeId);
+      if (stock.products.length === 0) {
+        return {
+          isSuccess: true,
+          message:
+            'Successfully product was removed. There are no more products in this place.',
+          redirect: true,
+        };
+      } else {
+        return {
+          isSuccess: true,
+          message: `${amountToRemove} pieces amount of product was subtracted and deleted completely`,
+          redirect: false,
+        };
+      }
+    } else {
       return {
         isSuccess: true,
-        message: `${amountToRemove} pieces amount of product was subtracted and deleted completely`,
+        message: `${amountToRemove} pieces amount of product was subtracted`,
+        redirect: false,
       };
     }
-    return {
-      isSuccess: true,
-      message: `${amountToRemove} pieces amount of product was subtracted`,
-    };
   }
 
   async getAssignedProductToPlace(placeId, productId) {
