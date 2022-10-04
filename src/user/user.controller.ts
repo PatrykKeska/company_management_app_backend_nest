@@ -8,7 +8,7 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { Response } from 'Express';
+import { Response } from 'express';
 import { UserService } from './user.service';
 import { CreateUserResponse } from './interfaces/createUserResponse';
 import { CreateUserDto } from './dto/createUser.dto';
