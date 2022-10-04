@@ -54,7 +54,6 @@ export class AuthService {
         .cookie('jwt', token.accessToken, {
           secure: false,
           domain: 'localhost',
-          httpOnly: true,
         })
         .json({ logged: true, status: 200 });
     } catch (e) {
@@ -69,7 +68,7 @@ export class AuthService {
       res.clearCookie('jwt', {
         secure: false,
         domain: 'localhost',
-        httpOnly: true,
+        httpOnly: false,
       });
       return res.json({ logged: false, status: 200 });
     } catch (e) {
