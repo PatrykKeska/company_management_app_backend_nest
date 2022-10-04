@@ -15,7 +15,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { RemoveProductAssignDto } from './dto/remove-product-assign.dto';
 import { RemoveProductAssignResponse } from './interfaces/remove-product-assign-response';
 
-@Controller('product-in-places')
+@Controller('api/product-in-places')
 export class ProductInPlacesController {
   constructor(
     @Inject(ProductInPlacesService)

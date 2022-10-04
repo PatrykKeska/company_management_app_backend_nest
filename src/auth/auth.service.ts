@@ -44,7 +44,7 @@ export class AuthService {
         where: { userEmail: email, pwdHash: hashPwd(pwd) },
       });
       if (!user) {
-        return res.json({ error: 'Invalid login data!' });
+        return res.json({ error: 'Invalid login data!', status: 401 });
       }
       const token = AuthService.createToken(
         await AuthService.generateToken(user),
@@ -55,7 +55,7 @@ export class AuthService {
           domain: 'localhost',
           httpOnly: true,
         })
-        .json({ ok: true });
+        .json({ logged: true, status: 200 });
     } catch (e) {
       return res.json({ error: e.message });
     }
@@ -70,7 +70,7 @@ export class AuthService {
         domain: 'localhost',
         httpOnly: true,
       });
-      return res.json({ logout: 'success' });
+      return res.json({ logged: false, status: 200 });
     } catch (e) {
       return res.json({ error: e.message });
     }

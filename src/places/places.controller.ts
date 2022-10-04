@@ -26,7 +26,7 @@ import { multerStorage, storageDir } from '../utils/storage';
 import * as path from 'path';
 import { RestorePlaceDto } from '../products/dto/restore-place.dto';
 
-@Controller('places')
+@Controller('api/places')
 export class PlacesController {
   constructor(
     @Inject(forwardRef(() => PlacesService)) private places: PlacesService,

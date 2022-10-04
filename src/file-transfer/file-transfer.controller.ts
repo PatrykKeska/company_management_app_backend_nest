@@ -1,7 +1,7 @@
 import { Body, Controller, Inject, Post, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { FileTransferService } from './file-transfer.service';
-@Controller('file-transfer')
+@Controller('api/file-transfer')
 export class FileTransferController {
   constructor(
     @Inject(FileTransferService)

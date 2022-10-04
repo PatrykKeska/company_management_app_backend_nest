@@ -26,7 +26,7 @@ import * as path from 'path';
 import { RestoreProductDto } from './dto/restore-product.dto';
 import { SetProductUnavailableDto } from './dto/set-product-unavailable.dto';
 
-@Controller('products')
+@Controller('api/products')
 export class ProductsController {
   constructor(
     @Inject(forwardRef(() => ProductsService))
