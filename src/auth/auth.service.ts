@@ -43,6 +43,7 @@ export class AuthService {
       const user = await User.findOne({
         where: { userEmail: email, pwdHash: hashPwd(pwd) },
       });
+
       if (!user) {
         return res.json({ error: 'Invalid login data!', status: 401 });
       }
