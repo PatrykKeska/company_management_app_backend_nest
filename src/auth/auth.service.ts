@@ -4,9 +4,9 @@ import { hashPwd } from '../utils/hash-pwd';
 import { v4 as uuid } from 'uuid';
 import { sign } from 'jsonwebtoken';
 import { JwtPayload } from './jwt.strategy';
-import { jwtConstants } from './constants';
 import { User } from '../entities/user.entity';
 import { AuthLoginDto } from './dto/auth-login.dto';
+import { jwtConstants } from '../secretFIle';
 
 @Injectable()
 export class AuthService {
