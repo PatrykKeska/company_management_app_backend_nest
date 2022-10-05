@@ -21,4 +21,24 @@ export class FileTransferService {
       res.json({ error });
     }
   }
+
+  async getDefaultProductPhoto(res: any) {
+    try {
+      res.sendFile('default-product-image.jpeg', {
+        root: path.join(storageDir(), '/product-photos/'),
+      });
+    } catch (error) {
+      res.json({ error });
+    }
+  }
+
+  async getDefaultPlacePhoto(res: any) {
+    try {
+      res.sendFile('default-office-image.jpeg', {
+        root: path.join(storageDir(), '/product-photos/'),
+      });
+    } catch (error) {
+      res.json({ error });
+    }
+  }
 }
