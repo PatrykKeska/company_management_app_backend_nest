@@ -15,7 +15,7 @@ export class AuthService {
     expiresIn: number;
   } {
     const payload: JwtPayload = { id: currentTokenId };
-    const expiresIn = 60 * 60 * 24;
+    const expiresIn = Number(60 * 60 * 24);
     const accessToken = sign(payload, jwtConstants.secret, { expiresIn });
     return {
       accessToken,
@@ -52,12 +52,13 @@ export class AuthService {
       );
       return res
         .cookie('jwt', token.accessToken, {
-          secure: false,
-          domain: 'localhost',
+          secure: true,
+          domain: 'kendziior4.usermd.net',
+          httpOnly: true,
         })
         .json({ logged: true, status: 200 });
     } catch (e) {
-      return res.json({ error: e.message });
+      return res.json({ error: e.message, message: 'this is error' });
     }
   }
 
@@ -66,9 +67,9 @@ export class AuthService {
       user.currentTokenId = null;
       await user.save();
       res.clearCookie('jwt', {
-        secure: false,
-        domain: 'localhost',
-        httpOnly: false,
+        secure: true,
+        domain: 'kendziior4.usermd.net',
+        httpOnly: true,
       });
       return res.json({ logged: false, status: 200 });
     } catch (e) {
