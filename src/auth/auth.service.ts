@@ -4,9 +4,9 @@ import { hashPwd } from '../utils/hash-pwd';
 import { v4 as uuid } from 'uuid';
 import { sign } from 'jsonwebtoken';
 import { JwtPayload } from './jwt.strategy';
-import { jwtConstants } from './constants';
 import { User } from '../entities/user.entity';
 import { AuthLoginDto } from './dto/auth-login.dto';
+import { jwtConstants } from '../secretFIle';
 
 @Injectable()
 export class AuthService {
@@ -53,9 +53,9 @@ export class AuthService {
         .cookie('jwt', token.accessToken, {
           secure: false,
           domain: 'localhost',
-          httpOnly: true,
+          httpOnly: false,
         })
-        .json({ ok: true });
+        .json({ ok: true, status: 200 });
     } catch (e) {
       return res.json({ error: e.message });
     }
@@ -68,7 +68,7 @@ export class AuthService {
       res.clearCookie('jwt', {
         secure: false,
         domain: 'localhost',
-        httpOnly: true,
+        httpOnly: false,
       });
       return res.json({ logout: 'success' });
     } catch (e) {
