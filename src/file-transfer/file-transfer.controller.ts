@@ -16,11 +16,18 @@ export class FileTransferController {
     private fileTransferService: FileTransferService,
   ) {}
   @UseGuards(AuthGuard('jwt'))
-  @Post('/photo')
-  async getPhoto(@Body() body, @Res() res: any): Promise<any> {
+  @Post('/product-photo')
+  async getProductImg(@Body() body, @Res() res: any): Promise<any> {
     const { id } = body;
-    return this.fileTransferService.getPhoto(id, res);
+    return this.fileTransferService.getProductPhoto(id, res);
   }
+  @UseGuards(AuthGuard('jwt'))
+  @Post('/place-photo')
+  async getPlaceImg(@Body() body, @Res() res: any): Promise<any> {
+    const { id } = body;
+    return this.fileTransferService.getPlacePhoto(id, res);
+  }
+
   @UseGuards(AuthGuard('jwt'))
   @Get('/default-product')
   async getDefaultProductImg(@Res() res: any): Promise<any> {
