@@ -24,7 +24,7 @@ import { join } from 'path';
     ProductInPlacesModule,
     FileTransferModule,
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'storage/product-photos/'),
+      rootPath: join(__dirname, 'storage/product-photos'),
       serveRoot: '/files',
     }),
   ],

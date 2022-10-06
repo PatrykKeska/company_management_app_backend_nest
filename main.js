@@ -11,6 +11,7 @@ async function bootstrap() {
   const app = await core_1.NestFactory.create(app_module_1.AppModule);
   app.enableCors({
     credentials: true,
+    origin: 'https://kendziior4.usermd.net',
   });
   app.use(cookieParser());
   await app.listen(3001);
