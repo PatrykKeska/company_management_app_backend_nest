@@ -86,10 +86,7 @@ export class PlacesService {
       placeToUpdate.street = street;
       placeToUpdate.buildNumber = buildNumber;
       if (photo) {
-        const pathTo = path.join(
-          storageDir(),
-          `/product-photos/${placeToUpdate.img}`,
-        );
+        const pathTo = path.join(storageDir(), `/${placeToUpdate.img}`);
         if (
           placeToUpdate.img &&
           placeToUpdate.img !== 'default-office-image.jpeg'

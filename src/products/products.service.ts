@@ -134,10 +134,7 @@ export class ProductsService {
     }
     if (!isProductAssign && isProductExist) {
       await Products.delete(id);
-      const pathTo = path.join(
-        storageDir(),
-        `/product-photos/${isProductExist.img}`,
-      );
+      const pathTo = path.join(storageDir(), `/${isProductExist.img}`);
       if (
         isProductExist.img &&
         isProductExist.img !== 'default-product-image.jpeg'

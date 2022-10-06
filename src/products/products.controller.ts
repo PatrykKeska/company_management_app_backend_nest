@@ -42,7 +42,7 @@ export class ProductsController {
   @UseGuards(AuthGuard('jwt'))
   @UseInterceptors(
     FileInterceptor('file', {
-      storage: multerStorage(path.join(storageDir(), 'product-photos')),
+      storage: multerStorage(path.join(storageDir(), '/')),
     }),
   )
   @Post('/add-new')
@@ -63,7 +63,7 @@ export class ProductsController {
   @UseGuards(AuthGuard('jwt'))
   @UseInterceptors(
     FileInterceptor('file', {
-      storage: multerStorage(path.join(storageDir(), 'product-photos')),
+      storage: multerStorage(path.join(storageDir(), '/')),
     }),
   )
   @Patch('/update')
