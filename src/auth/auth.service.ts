@@ -53,7 +53,7 @@ export class AuthService {
       return res
         .cookie('jwt', token.accessToken, {
           secure: true,
-          domain: 'kendziior4.usermd.net',
+          domain: 'patrykkeska.networkmanager.info',
           httpOnly: true,
         })
         .json({ logged: true, status: 200 });
@@ -68,7 +68,7 @@ export class AuthService {
       await user.save();
       res.clearCookie('jwt', {
         secure: true,
-        domain: 'kendziior4.usermd.net',
+        domain: 'patrykkeska.networkmanager.info',
         httpOnly: true,
       });
       return res.json({ logged: false, status: 200 });
