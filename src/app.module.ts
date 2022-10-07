@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
@@ -12,6 +17,7 @@ import { FileTransferModule } from './file-transfer/file-transfer.module';
 import dbConfig from './config/dbConfig';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { LoggerMiddleware } from './middleware/logger.middleware';
 
 @Module({
   imports: [
@@ -24,11 +30,18 @@ import { join } from 'path';
     ProductInPlacesModule,
     FileTransferModule,
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, 'storage/product-photos'),
-      serveRoot: '/files',
+      rootPath: join(__dirname, 'public/product-photos/'),
+      serveRoot: '/',
     }),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(LoggerMiddleware)
+      .exclude('/api/**')
+      .forRoutes({ path: '/places', method: RequestMethod.ALL });
+  }
+}

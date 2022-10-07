@@ -21,5 +21,5 @@ export function multerStorage(dest: string) {
 }
 
 export function storageDir() {
-  return path.join(__dirname, '../public');
+  return path.join(__dirname, '../public/product-photos');
 }
