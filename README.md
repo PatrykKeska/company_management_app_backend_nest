@@ -7,7 +7,6 @@ Don't forget to give this project a star for additional support ;)
 Maybe you can mention me or this repo in the acknowledgements too
 -->
 
-
   <h1>Readme</h1>
 
 
@@ -38,28 +37,41 @@ Maybe you can mention me or this repo in the acknowledgements too
 - [Acknowledgements](#gem-acknowledgements)
 
 
+<div align="center"> 
 
 <!-- About the Project -->
 ## :star2: About the Project
-<h3>In the beginning, I want to say I created a guide about deploying applications to the Nginx server. There is a lot about correctly configuring and handling environment variables, database config, etc.
-Everything is in the project main directory /guide/Mydevil...pdf
+<h3>In the beginning, I want to say I created a guide about deploying applications to the Nginx server. There is a lot about correctly configuring and handling environment variables, database config, etc</h3>.
+Everything is in:
+<br>
+
+```` company_management_app_backend_nest/Guide/MyDevil Hosting Nest...pdf ````
+
+<br>
 The project has separate branches for deployment.
 <br>
+
 React:
+````
 - branch [version_2.0] for localhost
 - branch [production] for deployment
+````
 <br>
 <br>
-NestJs :
+NestJs:
+
+````
 - branch [main] for localhost
-- branch [deploy] for deployment</h3>
+- branch [deploy] for deployment
+ ```` 
+
 <br/>* Basic Concept of view was created in Figma : https://www.figma.com/file/5TNV2aSijVHNTm0f8phW7u/Projekt-Zaliczeniowy?node-id=0%3A1
 <br/>* App is still in development, right now has basic features implemented.
 <br/>* Check roadmap to see an incoming changes...
 <br/>* Check the features to see implemented functionalities.
 <h3>Preview Email: "admin@gmail.com"</br></h3>
 <h3>Preview Password: "admin"</br></h3>
-<br/>* Preview available(Login and password : admin) : https://kendziior4.usermd.net/storage
+<br/>*<h3>Preview available https://kendziior4.usermd.net/storage </h3>
 <br/>* Frontend Repo : https://github.com/PatrykKeska/company_management_app_front
 <br/>* Since we are using a TypeOrm, there is no need to use a file to build a database.
   Please make sure when you create a new database to keep the name lowercase; another way, Typeform might have some issues while rebuilding a structure.
@@ -163,7 +175,7 @@ If you want to run a project locally easiest way to do it:
 In this file, you will also find the Salt variable which is responsible for the hashPwd function.
 Make sure is long and complicated enough
 
-Also, there is a jwtConstants which is also should be unique and complicated
+Also, there is a jwtConstants which also should be unique and complicated
 
 ```` src/secretFile.ts````
 ````
@@ -181,7 +193,7 @@ export const jwtConstants = {
 };
 
 ```` 
-
+</div> 
 <div align="center"> 
 
 
@@ -262,12 +274,14 @@ This is basic concept and still lot of features has to be implemented.
 <!-- Roadmap  -->
 ## :compass: Roadmap
 
-* [x] Basic functionality (check features section)
-* [x] Linux Server Host Preview
-* [x] Registry a new accounts
-* [x] JWT session
-* [x] File transfer from Client=>Server and reverse
-* [x] Backend in NestJS
+* [x] ~~Linux Server Host Preview~~
+* [x] ~~JWT session~~
+* [x] ~~File transfer from Client=>Server and reverse~~
+* [x] ~~Backend in NestJS~~
+* [x] much more user-friendly interface
+* [x] better UX/UI
+* [x] multi-user platform 
+* [x] email registration
 
 
 
@@ -286,5 +300,5 @@ Reach me on Twitter - [@twitter_handle](https://twitter.com/Patryk09676751) <br>
 Reach me on LinkedIn - [@linkedin_handle](https://www.linkedin.com/in/patryk-keska-992a71250/) <br>
 Reach me by email - PatrykKeska4@gmail.com
 
-
+</div>
 
