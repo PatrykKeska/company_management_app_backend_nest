@@ -1,7 +1,6 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { AddProductToPlaceDto } from './dto/add-product-to-place.dto';
 import { ProductAssignToPlaceResponse } from './interfaces/product-assign-to-place-response';
-import { ProductInPlaces } from '../entities/product_in_places.entity';
 import { DataSource } from 'typeorm';
 import { PlacesService } from '../places/places.service';
 import { ProductsService } from '../products/products.service';
@@ -13,6 +12,7 @@ import { PlaceProductNotExistException } from '../exceptions/place-product-not-e
 import { ProductAmountToLow } from '../exceptions/product-amount-to.low';
 import { RemoveProductAssignDto } from './dto/remove-product-assign.dto';
 import { RemoveProductAssignResponse } from './interfaces/remove-product-assign-response';
+import { ProductInPlaces } from '../entities/product_in_places.entity';
 
 @Injectable()
 export class ProductInPlacesService {
@@ -193,7 +193,7 @@ export class ProductInPlacesService {
     return await this.dataSource
       .getRepository(ProductInPlaces)
       .createQueryBuilder('productInPlaces')
-      .leftJoinAndSelect('productInPlaces.places', 'places')
+      .leftJoinAndSelect('product InPlaces.places', 'places')
       .leftJoinAndSelect('productInPlaces.products', 'products')
       .where('places.id = :placeId', { placeId })
       .andWhere('products.id = :productId', { productId })
