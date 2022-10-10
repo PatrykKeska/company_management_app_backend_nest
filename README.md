@@ -71,7 +71,7 @@ NestJs:
 <br/>* Check the features to see implemented functionalities.
 <h3>Preview Email: "admin@gmail.com"</br></h3>
 <h3>Preview Password: "admin"</br></h3>
-<br/>*<h3>Preview available https://kendziior4.usermd.net/storage </h3>
+<br/>*<h3>Preview available https://kendziior4.usermd.net </h3>
 <br/>* Frontend Repo : https://github.com/PatrykKeska/company_management_app_front
 <br/>* Since we are using a TypeOrm, there is no need to use a file to build a database.
   Please make sure when you create a new database to keep the name lowercase; another way, Typeform might have some issues while rebuilding a structure.
