@@ -33,6 +33,18 @@ export class UserController {
     return await this.userService.createNewUser(email, pwd);
   }
 
+  @Get('/default-user')
+  async defaultUser(): Promise<CreateUserResponse> {
+    const defaultUser = {
+      email: 'admin@gmail.com',
+      pwd: 'admin',
+    };
+    return await this.userService.createNewUser(
+      defaultUser.email,
+      defaultUser.pwd,
+    );
+  }
+
   @Post('/login')
   async login(
     @Body() req: AuthLoginDto,

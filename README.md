@@ -170,7 +170,7 @@ In my guide on the chapter:
 <br>
 If you want to run a project locally easiest way to do it:
 - use my secret file scheme and fill up all values according to your database
-- rename file to secretFile.ts
+
 
 In this file, you will also find the Salt variable which is responsible for the hashPwd function.
 Make sure is long and complicated enough
@@ -182,24 +182,45 @@ Also, there is a jwtConstants which also should be unique and complicated
 export const dbConnection = {
   DB_CONNECTION: 'mysql',
   DB_HOST: 'localhost',
-  DB_USERNAME: 'Your database User Name',
-  DB_PASSWORD: 'Your database user password',
-  DB_DATABASE: 'your database name',
-  SALT: 'Salt for hash pwd',
+  DB_USERNAME: 'Database User Name',
+  DB_PASSWORD: 'Database User Password',
+  DB_DATABASE: 'Database Name',
 };
+
+export const SALT = 'Salt for hash pwd';
 
 export const jwtConstants = {
   secret: 'secret for jwt',
 };
+
 
 ```` 
 </div> 
 <div align="center"> 
 
 
-<h3>To run locally make sure backend is listening and database is implemented correctly.
+<h3>To run locally make sure backend is listening and database is implemented correctly. </h3>
 
+<h4>I'm working on the multi-user application, so the registry page on the frontend app is disabled.</h4>
 
+After the project runs, paste this address into your web browser.
+````
+http://localhost:3001/user/default-user
+````
+after that, you can come back on
+````
+http://localhost:3000/
+````
+
+and login using :
+````
+email: admin@gmail.com
+password: admin
+````
+
+<h3>ATTENTION!
+This is crucial to remove this endpoint when you deploy the app!
+It is a temporary solution to an easy start with a project locally. </h3>
 
 
 
