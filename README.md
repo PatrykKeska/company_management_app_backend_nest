@@ -95,6 +95,8 @@ App is still in development; right now has basic features implemented.<br>
 <br>
 Check the roadmap to see incoming changes...
 Check the features to see implemented functionalities.
+
+<h3>Preview available: https://kendziior4.usermd.net/ </h3>
 ````
 Preview Email: "admin@gmail.com"
 ````
