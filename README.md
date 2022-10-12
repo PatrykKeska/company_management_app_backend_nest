@@ -63,6 +63,7 @@ Maybe you can mention me or this repo in the acknowledgements too
 ## :star2: About the Project
 <h3>In the beginning, I want to say I created a guide about deploying applications to the Nginx server. There is a lot about correctly configuring and handling environment variables, database config, etc...</h3>
 Everything is in:
+
 ````
 /src/Guide/MyDevil....pdf 
 ````
