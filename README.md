@@ -17,27 +17,27 @@ Maybe you can mention me or this repo in the acknowledgements too
 
 [About the Project](#star2-about-the-project)
 <br>
-  [Screenshots](#camera-screenshots)
+[Screenshots](#camera-screenshots)
 <br>
-  [Tech Stack](#space_invader-tech-stack)
+[Tech Stack](#space_invader-tech-stack)
 <br>
-  [Features](#dart-features)
+[Features](#dart-features)
 <br>
-  [Color Reference](#art-color-reference)
+[Color Reference](#art-color-reference)
 <br>
-  [Environment Variables](#key-environment-variables)
+[Environment Variables](#key-environment-variables)
 <br>
-  [Getting Started](#toolbox-getting-started)
+[Getting Started](#toolbox-getting-started)
 <br>
-  [Prerequisites](#bangbang-prerequisites)
+[Prerequisites](#bangbang-prerequisites)
 <br>
-  [Installation](#gear-installation)
+[Installation](#gear-installation)
 <br>
-  [Running Tests](#test_tube-running-tests)
+[Running Tests](#test_tube-running-tests)
 <br>
-  [Run Locally](#running-run-locally)
+[Run Locally](#running-run-locally)
 <br>
-  [Deployment](#triangular_flag_on_post-deployment)
+[Deployment](#triangular_flag_on_post-deployment)
 <br>
 [Usage](#eyes-usage)
 <br>
@@ -66,11 +66,13 @@ Everything is in:
 <br>
 
 ```` company_management_app_backend_nest/Guide/MyDevil Hosting Nest...pdf ````
-
+<h3>Frontend Repository</h3>
+````
+https://github.com/PatrykKeska/company_management_app_front
+````
 <br>
 The project has separate branches for deployment.
 <br>
-
 React:
 ````
 - branch [version_2.0] for localhost
@@ -155,10 +157,10 @@ Preview Password: "admin."
 ### :dart: Features
 
 * [x] Login/Logout
-* [x] JWT Session 
+* [x] JWT Session
 * [x] Safe File Transfer
-* [x] User Passwords encryption 
-* [x] User Registration  
+* [x] User Passwords encryption
+* [x] User Registration
 * [x] Local Storage Session (Possible to change session time in /utils/isTokenExpire.ts)
 * [x] RWD
 * [x] Creating a new items.
@@ -178,15 +180,14 @@ Check the Roadmap to find an incoming features!
 <!-- Env Variables -->
 ### :key: Environment Variables
 
-In my guide on the chapter:
-2. Environment variables.
-   There is more about configuration env variables.
-   check it out here:
+In my guide on the chapter: "Environment variables".<br>
+There is more about configuration env variables.
+check it out here:
 <br>
 ```` company_management_app_backend_nest/Guide/MyDevil Hosting Nest...pdf ````
 <br>
 If you want to run a project locally easiest way to do it:
-- use my secret file scheme and fill up all values according to your database
+use my secret file scheme and fill up all values according to your database
 
 
 In this file, you will also find the Salt variable which is responsible for the hashPwd function.
@@ -227,7 +228,7 @@ export const jwtConstants = {
 
 After the project runs, please click the button "create default account"
 <br>
- you are able to use the account :
+you are able to use the account :
 
 ````
 email: admin@gmail.com
@@ -317,7 +318,7 @@ This is basic concept and still lot of features has to be implemented.
 * [x] ~~Backend in NestJS~~
 * [x] much more user-friendly interface
 * [x] better UX/UI
-* [x] multi-user platform 
+* [x] multi-user platform
 * [x] email registration
 
 
