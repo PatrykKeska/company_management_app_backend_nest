@@ -65,8 +65,11 @@ Maybe you can mention me or this repo in the acknowledgements too
 Everything is in:
 <br>
 
-```` company_management_app_backend_nest/Guide/MyDevil Hosting Nest...pdf ````
+```` company_management_app_backend_nest/Guide/MyDevil Hosting Nest...pdf
+````
+
 <h3>Frontend Repository</h3>
+
 ````
 https://github.com/PatrykKeska/company_management_app_front
 ````
@@ -97,6 +100,7 @@ Check the roadmap to see incoming changes...
 Check the features to see implemented functionalities.
 
 <h3>Preview available: https://kendziior4.usermd.net/ </h3>
+
 ````
 Preview Email: "admin@gmail.com"
 ````
