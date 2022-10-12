@@ -15,26 +15,46 @@ Maybe you can mention me or this repo in the acknowledgements too
 <!-- Table of Contents -->
 # :notebook_with_decorative_cover: Table of Contents
 
-- [About the Project](#star2-about-the-project)
-  * [Screenshots](#camera-screenshots)
-  * [Tech Stack](#space_invader-tech-stack)
-  * [Features](#dart-features)
-  * [Color Reference](#art-color-reference)
-  * [Environment Variables](#key-environment-variables)
-- [Getting Started](#toolbox-getting-started)
-  * [Prerequisites](#bangbang-prerequisites)
-  * [Installation](#gear-installation)
-  * [Running Tests](#test_tube-running-tests)
-  * [Run Locally](#running-run-locally)
-  * [Deployment](#triangular_flag_on_post-deployment)
-- [Usage](#eyes-usage)
-- [Roadmap](#compass-roadmap)
-- [Contributing](#wave-contributing)
-  * [Code of Conduct](#scroll-code-of-conduct)
-- [FAQ](#grey_question-faq)
-- [License](#warning-license)
-- [Contact](#handshake-contact)
-- [Acknowledgements](#gem-acknowledgements)
+[About the Project](#star2-about-the-project)
+<br>
+  [Screenshots](#camera-screenshots)
+<br>
+  [Tech Stack](#space_invader-tech-stack)
+<br>
+  [Features](#dart-features)
+<br>
+  [Color Reference](#art-color-reference)
+<br>
+  [Environment Variables](#key-environment-variables)
+<br>
+  [Getting Started](#toolbox-getting-started)
+<br>
+  [Prerequisites](#bangbang-prerequisites)
+<br>
+  [Installation](#gear-installation)
+<br>
+  [Running Tests](#test_tube-running-tests)
+<br>
+  [Run Locally](#running-run-locally)
+<br>
+  [Deployment](#triangular_flag_on_post-deployment)
+<br>
+[Usage](#eyes-usage)
+<br>
+[Roadmap](#compass-roadmap)
+<br>
+[Contributing](#wave-contributing)
+<br>
+[Code of Conduct](#scroll-code-of-conduct)
+<br>
+[FAQ](#grey_question-faq)
+<br>
+[License](#warning-license)
+<br>
+[Contact](#handshake-contact)
+<br>
+[Acknowledgements](#gem-acknowledgements)
+<br>
 
 
 <div align="center"> 
@@ -65,17 +85,21 @@ NestJs:
 - branch [deploy] for deployment
  ```` 
 
-<br/>* Basic Concept of view was created in Figma : https://www.figma.com/file/5TNV2aSijVHNTm0f8phW7u/Projekt-Zaliczeniowy?node-id=0%3A1
-<br/>* App is still in development, right now has basic features implemented.
-<br/>* Check roadmap to see an incoming changes...
-<br/>* Check the features to see implemented functionalities.
-<h3>Preview Email: "admin@gmail.com"</br></h3>
-<h3>Preview Password: "admin"</br></h3>
-<br/>*<h3>Preview available https://kendziior4.usermd.net </h3>
-<br/>* Frontend Repo : https://github.com/PatrykKeska/company_management_app_front
-<br/>* Since we are using a TypeOrm, there is no need to use a file to build a database.
-  Please make sure when you create a new database to keep the name lowercase; another way, Typeform might have some issues while rebuilding a structure.
-<h2>Please Check Frontend repo to find out more about it :)</h2></br>
+Basic Concept of view was created in Figma:
+````
+https://www.figma.com/file/5TNV2aSijVHNTm0f8phW7u/Projekt-Zaliczeniowy?node-id=0%3A1
+````
+App is still in development; right now has basic features implemented.<br>
+<br>
+Check the roadmap to see incoming changes...
+Check the features to see implemented functionalities.
+````
+Preview Email: "admin@gmail.com"
+````
+
+````
+Preview Password: "admin."
+````
 
 <!-- Screenshots -->
 ### :camera: Screenshots
@@ -150,13 +174,6 @@ NestJs:
 
 Check the Roadmap to find an incoming features!
 
-<!-- Color Reference -->
-### :art: Color Reference
-
-| Color             | Hex                                                                |
-| ----------------- | ------------------------------------------------------------------ |
-| Primary Color | ![#FFF96B;](https://via.placeholder.com/10/222831?text=+) |
-
 
 <!-- Env Variables -->
 ### :key: Environment Variables
@@ -200,19 +217,18 @@ export const jwtConstants = {
 
 
 <h3>To run locally make sure backend is listening and database is implemented correctly. </h3>
+<h3>You can check my quick video guide to see how to run the application on your localhost
+</h3>
+
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/X6zKpBCdazU/0.jpg)](http://www.youtube.com/watch?v=X6zKpBCdazU "Localhost Guide")
+
 
 <h4>I'm working on the multi-user application, so the registry page on the frontend app is disabled.</h4>
 
-After the project runs, paste this address into your web browser.
-````
-http://localhost:3001/user/default-user
-````
-after that, you can come back on
-````
-http://localhost:3000/
-````
+After the project runs, please click the button "create default account"
+<br>
+ you are able to use the account :
 
-and login using :
 ````
 email: admin@gmail.com
 password: admin
