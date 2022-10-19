@@ -16,7 +16,7 @@ export class FileTransferService {
         throw new Error('No photo found');
       }
       res.sendFile(one.img, {
-        root: path.join(storageDir(), '/product-photos/'),
+        root: path.join(storageDir(), '/'),
       });
     } catch (error) {
       res.json({ error });
@@ -32,7 +32,7 @@ export class FileTransferService {
         throw new Error('No photo found');
       }
       res.sendFile(one.img, {
-        root: path.join(storageDir(), '/product-photos/'),
+        root: path.join(storageDir(), '/'),
       });
     } catch (error) {
       res.json({ error });
@@ -42,7 +42,7 @@ export class FileTransferService {
   async getDefaultProductPhoto(res: any) {
     try {
       res.sendFile('default-product-image.jpeg', {
-        root: path.join(storageDir(), '/product-photos/'),
+        root: path.join(storageDir(), '/'),
       });
     } catch (error) {
       res.json({ error });
@@ -52,7 +52,7 @@ export class FileTransferService {
   async getDefaultPlacePhoto(res: any) {
     try {
       res.sendFile('default-office-image.jpeg', {
-        root: path.join(storageDir(), '/product-photos/'),
+        root: path.join(storageDir(), '/'),
       });
     } catch (error) {
       res.json({ error });
