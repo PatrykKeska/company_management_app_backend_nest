@@ -193,7 +193,7 @@ export class ProductInPlacesService {
     return await this.dataSource
       .getRepository(ProductInPlaces)
       .createQueryBuilder('productInPlaces')
-      .leftJoinAndSelect('product InPlaces.places', 'places')
+      .leftJoinAndSelect('productInPlaces.places', 'places')
       .leftJoinAndSelect('productInPlaces.products', 'products')
       .where('places.id = :placeId', { placeId })
       .andWhere('products.id = :productId', { productId })
