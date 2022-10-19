@@ -8,7 +8,7 @@ async function bootstrap() {
     credentials: true,
     origin: 'http://localhost:3000',
   });
-  // app.useGlobalFilters(new ViewAuthFilter());
+
   app.use(cookieParser());
   app.useGlobalFilters(new NotFoundExceptionFilter());
   await app.listen(3001);
