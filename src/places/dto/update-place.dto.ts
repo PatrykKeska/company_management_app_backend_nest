@@ -1,8 +1,5 @@
-export class UpdatePlaceDto {
+import { NewPlaceDto } from './new-place.dto';
+
+export class UpdatePlaceDto extends NewPlaceDto {
   id: string;
-  name: string;
-  city: string;
-  street: string;
-  buildNumber: string;
-  img?: string;
 }
