@@ -1,8 +1,5 @@
-export class UpdateProductDto {
+import { CreateProductDto } from './create-product.dto';
+
+export class UpdateProductDto extends CreateProductDto {
   id: string;
-  name: string;
-  price: number;
-  amount: number;
-  dateOfBuy: string;
-  img: string;
 }
