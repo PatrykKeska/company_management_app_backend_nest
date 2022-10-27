@@ -14,6 +14,8 @@ import { ProductAssignToPlaceResponse } from './interfaces/product-assign-to-pla
 import { AuthGuard } from '@nestjs/passport';
 import { RemoveProductAssignDto } from './dto/remove-product-assign.dto';
 import { RemoveProductAssignResponse } from './interfaces/remove-product-assign-response';
+import { AllProductsInPlace } from './interfaces/all-products-in-place';
+import { Places } from '../entities/places.entity';
 
 @Controller('product-in-places')
 export class ProductInPlacesController {
@@ -34,7 +36,6 @@ export class ProductInPlacesController {
   async removeProduct(
     @Body() data: RemoveProductAssignDto,
   ): Promise<RemoveProductAssignResponse> {
-    console.log(data);
     return this.productInPlacesService.removeProductFromPlace(data);
   }
 
@@ -48,14 +49,16 @@ export class ProductInPlacesController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post('/get-exact')
-  async getExactPlace(@Body() data: AddProductToPlaceDto) {
+  async getExactPlace(
+    @Body() data: AddProductToPlaceDto,
+  ): Promise<AllProductsInPlace> {
     const { placeId } = data;
     return this.productInPlacesService.getExactFinalizedLocation(placeId);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Get('/get-all')
-  async getAllProductsInPlaces() {
+  async getAllProductsInPlaces(): Promise<Places[]> {
     return await this.productInPlacesService.getAllAssignedLocations();
   }
 }
