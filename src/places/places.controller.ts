@@ -87,7 +87,9 @@ export class PlacesController {
   }
   @UseGuards(AuthGuard('jwt'))
   @Delete('/remove')
-  async removePlace(@Body() place): Promise<PlaceResponseInterface> {
+  async removePlace(
+    @Body() place: GetPlaceById,
+  ): Promise<PlaceResponseInterface> {
     const { id } = place;
     return await this.places.deletePlace(id);
   }
