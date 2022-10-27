@@ -13,6 +13,7 @@ import { PlaceProductNotExistException } from '../exceptions/place-product-not-e
 import { ProductAmountToLow } from '../exceptions/product-amount-to.low';
 import { RemoveProductAssignDto } from './dto/remove-product-assign.dto';
 import { RemoveProductAssignResponse } from './interfaces/remove-product-assign-response';
+import { AllProductsInPlace } from './interfaces/all-products-in-place';
 
 @Injectable()
 export class ProductInPlacesService {
@@ -200,14 +201,16 @@ export class ProductInPlacesService {
       .getOne();
   }
 
-  async getExactFinalizedLocation(placeId: string) {
+  async getExactFinalizedLocation(
+    placeId: string,
+  ): Promise<AllProductsInPlace> {
     if (!placeId) {
       throw new NeedAllValuesException();
     }
     const allProductsInPlace = {
       place: {},
       products: [],
-    };
+    } as AllProductsInPlace;
 
     const products = await this.dataSource
       .getRepository(ProductInPlaces)
