@@ -14,17 +14,15 @@ import {
 import { PlacesService } from './places.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Places } from '../entities/places.entity';
-import { GetPlaceById } from './interfaces/get-place-by-id';
 import { NewPlaceDto } from './dto/new-place.dto';
-import { NewPlaceResponse } from './interfaces/new-place-response';
 import { UpdatePlaceDto } from './dto/update-place.dto';
-import { UpdatePlaceResponse } from './interfaces/update-place-response';
-import { DeletePlaceResponse } from './interfaces/delete-place-response';
 import { FileTransferInterface } from '../file-transfer/interfaces/multer-disk-uploaded-files';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { multerStorage, storageDir } from '../utils/storage';
 import * as path from 'path';
 import { RestorePlaceDto } from '../products/dto/restore-place.dto';
+import { GetPlaceById } from '../../dist/places/interfaces/get-place-by-id';
+import { PlaceResponseInterface } from './interfaces/place-response-interface';
 
 @Controller('places')
 export class PlacesController {
@@ -55,7 +53,7 @@ export class PlacesController {
   async addNewPlace(
     @Body() place: NewPlaceDto,
     @UploadedFile() file: FileTransferInterface,
-  ): Promise<NewPlaceResponse> {
+  ): Promise<PlaceResponseInterface> {
     return await this.places.createNewPlace(place, file);
   }
 
@@ -69,23 +67,27 @@ export class PlacesController {
   async updateExistedPlace(
     @Body() place: UpdatePlaceDto,
     @UploadedFile() file: FileTransferInterface,
-  ): Promise<UpdatePlaceResponse> {
+  ): Promise<PlaceResponseInterface> {
     return await this.places.updatePlaceValues(place, file);
   }
   @UseGuards(AuthGuard('jwt'))
   @Patch('/restore')
-  async restorePlaceToUse(@Body() place: RestorePlaceDto) {
+  async restorePlaceToUse(
+    @Body() place: RestorePlaceDto,
+  ): Promise<PlaceResponseInterface> {
     return await this.places.restorePlace(place.placeId);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Patch('/unavailable')
-  async setUnAvailablePlace(@Body() place: RestorePlaceDto) {
+  async setUnAvailablePlace(
+    @Body() place: RestorePlaceDto,
+  ): Promise<PlaceResponseInterface> {
     return await this.places.unAvailablePlace(place.placeId);
   }
   @UseGuards(AuthGuard('jwt'))
   @Delete('/remove')
-  async removePlace(@Body() place): Promise<DeletePlaceResponse> {
+  async removePlace(@Body() place): Promise<PlaceResponseInterface> {
     const { id } = place;
     return await this.places.deletePlace(id);
   }

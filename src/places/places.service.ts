@@ -1,9 +1,6 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { Places, PlaceStatus } from '../entities/places.entity';
 import { NewPlaceDto } from './dto/new-place.dto';
-import { NewPlaceResponse } from './interfaces/new-place-response';
-import { UpdatePlaceResponse } from './interfaces/update-place-response';
-import { DeletePlaceResponse } from './interfaces/delete-place-response';
 import { UpdatePlaceDto } from './dto/update-place.dto';
 import { ProductInPlaces } from '../entities/product_in_places.entity';
 import { DataSource } from 'typeorm';
@@ -15,6 +12,7 @@ import { storageDir } from '../utils/storage';
 import { NameExistException } from '../exceptions/name-exist.exception';
 import { PlaceProductNotExistException } from '../exceptions/place-product-not-exist.exception';
 import { NeedAllValuesException } from '../exceptions/need-all-values.exception';
+import { PlaceResponseInterface } from './interfaces/place-response-interface';
 
 @Injectable()
 export class PlacesService {
@@ -24,7 +22,7 @@ export class PlacesService {
     private fileTransferService: FileTransferService,
   ) {}
 
-  async deletePlace(id): Promise<DeletePlaceResponse> {
+  async deletePlace(id): Promise<PlaceResponseInterface> {
     const placeInAssign = await this.dataSource
       .getRepository(ProductInPlaces)
       .createQueryBuilder('productInPlaces')
@@ -75,7 +73,7 @@ export class PlacesService {
   async updatePlaceValues(
     place: UpdatePlaceDto,
     file: FileTransferInterface,
-  ): Promise<UpdatePlaceResponse> {
+  ): Promise<PlaceResponseInterface> {
     const { id, name, city, street, buildNumber } = place;
     const photo = file;
     const placeToUpdate = await Places.findOne({ where: { id } });
@@ -114,7 +112,7 @@ export class PlacesService {
   async createNewPlace(
     place: NewPlaceDto,
     file: FileTransferInterface,
-  ): Promise<NewPlaceResponse> {
+  ): Promise<PlaceResponseInterface> {
     const { name, city, street, buildNumber } = place;
     const photo = file;
     if (!name || !city || !street || !buildNumber) {
@@ -156,7 +154,7 @@ export class PlacesService {
     }
   }
 
-  async restorePlace(placeId: string) {
+  async restorePlace(placeId: string): Promise<PlaceResponseInterface> {
     if (!placeId) {
       throw new NeedAllValuesException();
     }
@@ -174,7 +172,7 @@ export class PlacesService {
     };
   }
 
-  async unAvailablePlace(placeId: string) {
+  async unAvailablePlace(placeId: string): Promise<PlaceResponseInterface> {
     if (!placeId) {
       throw new NeedAllValuesException();
     }
