@@ -2,11 +2,8 @@ import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { Products, ProductStatus } from '../entities/products.entity';
 import { DataSource } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
-import { ProductCreatedResponse } from './interfaces/product-created-response';
-import { ProductUpdatedResponse } from './interfaces/product-updated-response';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductInPlaces } from '../entities/product_in_places.entity';
-import { RemoveProductResponse } from './interfaces/remove-product-response';
 import { FileTransferInterface } from '../file-transfer/interfaces/multer-disk-uploaded-files';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -17,6 +14,7 @@ import { NameValuesToShortException } from '../exceptions/name-values-to-short.e
 import { NeedAllValuesException } from '../exceptions/need-all-values.exception';
 import { RestoreProductDto } from './dto/restore-product.dto';
 import { ProductAmountToLow } from '../exceptions/product-amount-to.low';
+import { ProductResponseInterface } from './interfaces/product-response-interface';
 
 @Injectable()
 export class ProductsService {
@@ -36,7 +34,7 @@ export class ProductsService {
   async createNewProduct(
     product: CreateProductDto,
     file: FileTransferInterface,
-  ): Promise<ProductCreatedResponse> {
+  ): Promise<ProductResponseInterface> {
     const { name, price, dateOfBuy, amount } = product;
     const photo = file;
     if (!name || !price || !dateOfBuy || !amount || amount < 1 || price < 0.1) {
@@ -82,7 +80,7 @@ export class ProductsService {
   async updateProduct(
     product: UpdateProductDto,
     file: FileTransferInterface,
-  ): Promise<ProductUpdatedResponse> {
+  ): Promise<ProductResponseInterface> {
     const { id, name, price, amount, dateOfBuy } = product;
     const photo = file;
     const productToUpdate = await Products.findOne({ where: { id } });
@@ -121,7 +119,7 @@ export class ProductsService {
     }
   }
 
-  async removeProduct(id: string): Promise<RemoveProductResponse> {
+  async removeProduct(id: string): Promise<ProductResponseInterface> {
     const isProductExist = await Products.findOne({ where: { id } });
     const isProductAssign = await this.dataSource
       .getRepository(ProductInPlaces)

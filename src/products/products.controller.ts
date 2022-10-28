@@ -15,16 +15,14 @@ import { ProductsService } from './products.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Products } from '../entities/products.entity';
 import { CreateProductDto } from './dto/create-product.dto';
-import { ProductCreatedResponse } from './interfaces/product-created-response';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { ProductUpdatedResponse } from './interfaces/product-updated-response';
-import { RemoveProductResponse } from './interfaces/remove-product-response';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { multerStorage, storageDir } from '../utils/storage';
 import { FileTransferInterface } from '../file-transfer/interfaces/multer-disk-uploaded-files';
 import * as path from 'path';
 import { RestoreProductDto } from './dto/restore-product.dto';
 import { SetProductUnavailableDto } from './dto/set-product-unavailable.dto';
+import { ProductResponseInterface } from './interfaces/product-response-interface';
 
 @Controller('products')
 export class ProductsController {
@@ -49,7 +47,7 @@ export class ProductsController {
   async createNewProduct(
     @Body() product: CreateProductDto,
     @UploadedFile() file: FileTransferInterface,
-  ): Promise<ProductCreatedResponse> {
+  ): Promise<ProductResponseInterface> {
     return this.productsService.createNewProduct(product, file);
   }
 
@@ -70,7 +68,7 @@ export class ProductsController {
   async updateProductValues(
     @Body() product: UpdateProductDto,
     @UploadedFile() file: FileTransferInterface,
-  ): Promise<ProductUpdatedResponse> {
+  ): Promise<ProductResponseInterface> {
     return this.productsService.updateProduct(product, file);
   }
 
@@ -78,20 +76,20 @@ export class ProductsController {
   @Patch('/restore')
   async restoreProduct(
     @Body() product: RestoreProductDto,
-  ): Promise<ProductUpdatedResponse> {
+  ): Promise<ProductResponseInterface> {
     return this.productsService.restoreProduct(product);
   }
   @UseGuards(AuthGuard('jwt'))
   @Patch('/unavailable')
   async setUnAvailable(
     @Body() product: SetProductUnavailableDto,
-  ): Promise<ProductUpdatedResponse> {
+  ): Promise<ProductResponseInterface> {
     return this.productsService.setProductUnAvailable(product.productId);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Delete('/remove')
-  async removeProduct(@Body() body): Promise<RemoveProductResponse> {
+  async removeProduct(@Body() body): Promise<ProductResponseInterface> {
     const { id } = body;
     return await this.productsService.removeProduct(id);
   }
